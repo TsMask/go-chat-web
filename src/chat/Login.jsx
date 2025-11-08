@@ -70,7 +70,7 @@ class Login extends React.Component {
         return (
             <div>
                 <Form
-                    name="basic"
+                    name="login"
                     labelCol={{ span: 9 }}
                     wrapperCol={{ span: 6 }}
                     onFinish={this.onFinish}
@@ -108,7 +108,7 @@ class Login extends React.Component {
 
                 <Drawer width='500px' forceRender={true} title="注册" placement="right" onClose={this.registerDrawerOnClose} visible={this.state.registerDrawerVisible}>
                     <Form
-                        name="basic"
+                        name="register"
                         labelCol={{ span: 4 }}
                         wrapperCol={{ span: 16 }}
                         onFinish={this.onRegister}
