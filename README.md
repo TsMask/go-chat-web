@@ -1,9 +1,9 @@
-[<img src="https://api.gitsponsors.com/api/badge/img?id=429480643" height="20">](https://api.gitsponsors.com/api/badge/link?p=7tFDsd584o96OI5wF/+5gGz7zPQ0oqxF/5x80dXnuK4GFcxewmnznrgb1ptFymOUd1XshHXAUoy5G0P6j+IZ0fqmzTbrrQWA3BEOIbnRzjG+A4q3JA2rkUDWOjslmFtRCc/SAg7DHBS+wTFrfpErUQ==)
+# go-chat-web
 
-## go-chat
 使用Go基于WebSocket的通讯聊天软件。
 
-### 功能列表：
+## 功能列表
+
 * 登录注册
 * 修改头像
 * 群聊天
@@ -21,13 +21,14 @@
 * 视频通话（基于webrtc的p2p视频通话）
 
 ## 后端
+
 [代码仓库](https://github.com/kone-net/go-chat)
 go中协程是非常轻量级的。在每个client接入的时候，为每一个client开启一个协程，能够在单机实现更大的并发。同时go的channel，可以非常完美的解耦client接入和消息的转发等操作。
 
 通过go-chat，可以掌握channel的和Select的配合使用，ORM框架的使用，web框架Gin的使用，配置管理，日志操作，还包括proto buffer协议的使用，等一些列项目中常用的技术。
 
-
 ### 后端技术和框架
+
 * web框架Gin
 * 长连接WebSocket
 * 日志框架Uber的zap
@@ -39,14 +40,15 @@ go中协程是非常轻量级的。在每个client接入的时候，为每一个
 * 图片文件二进制操作
 
 ## 前端
+
 基于react,UI和基本组件是使用ant design。可以很方便搭建前端界面。
 
 界面选择单页框架可以更加方便写聊天界面，比如像消息提醒，可以在一个界面接受到消息进行提醒，不会因为换页面或者查看其他内容影响消息接受。
 [前端代码仓库](https://github.com/kone-net/go-chat-web)：
-https://github.com/kone-net/go-chat-web
-
+<https://github.com/kone-net/go-chat-web>
 
 ### 前端技术和框架
+
 * React
 * Redux状态管理
 * AntDesign
@@ -61,8 +63,8 @@ https://github.com/kone-net/go-chat-web
 * 获取屏幕共享（mediaDevices）
 * WebRTC的p2p视频通话
 
-
 ### 截图
+
 * 语音，文字，图片，视频消息
 ![go-chat-panel](/public/screenshot/go-chat-panel.jpeg)
 
@@ -72,9 +74,41 @@ https://github.com/kone-net/go-chat-web
 * 屏幕共享
 ![screen-share](/public/screenshot/screen-share.png)
 
-## 分支说明
-one-file分支：
-该分支是所有逻辑都在一个文件实现，包括语音，文字，图片，视频消息，视频通话，语音电话，屏幕共享。
-main分支：
-是将各个部分进行拆分。将Panel拆分成，左、中、右。又将右边的发送文件，图片，文件拆分成更小的组件。
+## 如何启动
 
+```bash
+#npm --version
+#10.9.3
+#node --version
+#v22.20.0
+# 安装依赖
+npm install --registry https://mirrors.huaweicloud.com/repository/npm
+
+# 启动前端
+# src\chat\common\param\Params.jsx 修改为你的后端地址
+npm start
+
+# 构建前端
+npm run build
+
+```
+
+部署服务为/根路径，需要配置nginx反向代理到后端。
+更多查看create-react-app project部署文档。
+
+### 前端proto文件生成
+
+前端需要安装protoc buffer库
+
+```bash
+npm install protobufjs
+```
+
+生成protoc的js文件到目录
+
+```bash
+npx pbjs -t json-module -w commonjs -o src/chat/proto/proto.js  src/chat/proto/*.proto
+
+src/chat/proto/proto.js 是生成的文件的目录路径及其文件名称
+src/chat/proto/*.proto  是自己写的字段等
+```
