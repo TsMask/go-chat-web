@@ -3,7 +3,6 @@ import {
     Avatar,
     Button,
     Dropdown,
-    Menu,
     Modal,
     Upload,
     message
@@ -110,19 +109,23 @@ class UserInfo extends React.Component {
 
 
     render() {
-        const menu = (
-            <Menu>
-                <Menu.Item key={1}>
+        const items = [
+            {
+                label: (
                     <Button type='link'>{this.props.user.username}</Button>
-                </Menu.Item>
-                <Menu.Item key={2}>
+                ), key: 1
+            },
+            {
+                label: (
                     <Button type='link' onClick={this.modifyAvatar}>更新头像</Button>
-                </Menu.Item>
-                <Menu.Item key={3}>
+                ), key: 2
+            },
+            {
+                label: (
                     <Button type='link' onClick={this.loginout}>退出</Button>
-                </Menu.Item>
-            </Menu>
-        );
+                ), key: 3
+            },
+        ];
 
         const { loading, imageUrl } = this.state;
         const uploadButton = (
@@ -133,11 +136,11 @@ class UserInfo extends React.Component {
         );
         return (
             <>
-                <Dropdown overlay={menu} placement="bottomCenter" arrow>
+                <Dropdown menu={{ items }} placement="bottom" arrow>
                     <Avatar src={this.props.user.avatar} alt={this.props.user.username} />
                 </Dropdown>
 
-                <Modal title="更新头像" visible={this.state.isModalVisible} onCancel={this.handleCancel} footer={null}>
+                <Modal title="更新头像" open={this.state.isModalVisible} onCancel={this.handleCancel} footer={null}>
                     <Upload
                         name="file"
                         listType="picture-card"

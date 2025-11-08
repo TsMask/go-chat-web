@@ -3,7 +3,6 @@ import {
     Row,
     Button,
     Col,
-    Menu,
     Modal,
     Dropdown,
     Input,
@@ -142,19 +141,23 @@ class UserSearch extends React.Component {
     }
 
     render() {
-        const menu = (
-            <Menu>
-                <Menu.Item key={1}>
+        const items = [
+            {
+                label: (
                     <Button type='link' onClick={this.showModal}>添加用户</Button>
-                </Menu.Item>
-                <Menu.Item key={2}>
+                ), key: 1
+            },
+            {
+                label: (
                     <Button type='link' onClick={this.showModal}>添加群</Button>
-                </Menu.Item>
-                <Menu.Item key={3}>
+                ), key: 2
+            },
+            {
+                label: (
                     <Button type='link' onClick={this.showCreateGroup}>创建群</Button>
-                </Menu.Item>
-            </Menu>
-        );
+                ), key: 3
+            },
+        ];
 
         return (
             <>
@@ -165,14 +168,14 @@ class UserSearch extends React.Component {
                         </Input.Group>
                     </Col>
                     <Col>
-                        <Dropdown overlay={menu} placement="bottomCenter" arrow>
+                        <Dropdown menu={{ items }} placement="bottom" arrow>
                             <PlusCircleOutlined style={{ fontSize: 22, color: 'gray', marginLeft: 3, marginTop: 5 }} />
                         </Dropdown>
                     </Col>
                 </Row>
 
 
-                <Modal title="用户信息" visible={this.state.hasUser} onCancel={this.handleCancel} okText="添加用户" footer={null}>
+                <Modal title="用户信息" open={this.state.hasUser} onCancel={this.handleCancel} okText="添加用户" footer={null}>
                     <Input.Group compact>
                         <Input.Search allowClear style={{ width: '100%' }} onSearch={this.searchUser} />
                     </Input.Group>
@@ -187,7 +190,7 @@ class UserSearch extends React.Component {
                     <Button type='primary' onClick={this.joinGroup} disabled={this.state.queryUser.groupUuid == null || this.state.queryUser.groupUuid === ''}>添加群</Button>
                 </Modal>
 
-                <Modal title="创建群" visible={this.state.showCreateGroup} onCancel={this.handleCancelGroup} onOk={this.createGroup} okText="创建群">
+                <Modal title="创建群" open={this.state.showCreateGroup} onCancel={this.handleCancelGroup} onOk={this.createGroup} okText="创建群">
                     <Form
                         name="groupForm"
                         ref={this.groupForm}
