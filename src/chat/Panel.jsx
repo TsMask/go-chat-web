@@ -95,11 +95,15 @@ class Panel extends React.Component {
      * websocket连接
      */
     connection = () => {
+        // 避免重复连接websocket服务器
+        if (socket) {
+            return;
+        }
         console.log("to connect...")
         peer = new RTCPeerConnection();
         var image = document.getElementById('receiver');
         socket = new WebSocket("ws://" + Params.IP_PORT + "/socket.io?user=" + this.props.match.params.user)
-
+        
         socket.onopen = () => {
             heartCheck.start()
             console.log("connected")
@@ -532,7 +536,7 @@ class Panel extends React.Component {
                 </Row>
 
 
-                <Drawer width='820px' forceRender={true} title="媒体面板" placement="right" onClose={this.mediaPanelDrawerOnClose} visible={this.props.media.showMediaPanel}>
+                <Drawer width='820px' forceRender={true} title="媒体面板" placement="right" onClose={this.mediaPanelDrawerOnClose} open={this.props.media.showMediaPanel}>
                     <Tooltip title="结束视频语音">
                         <Button
                             shape="circle"
@@ -552,7 +556,7 @@ class Panel extends React.Component {
 
                 <Modal
                     title="视频电话"
-                    visible={this.state.videoCallModal}
+                    open={this.state.videoCallModal}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     okText="接听"
